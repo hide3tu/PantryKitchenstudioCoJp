@@ -3,7 +3,7 @@ name: 門田祐一
 nameEn: Kadota Yuuichi
 role: シナリオライター・ゲームデザイナー
 bio: アニメ脚本からゲームシナリオ、ゲーム設定まで幅広く手がけるシナリオライター・ゲームデザイナー。コンシューマーゲームからモバイルゲームまで多数の作品に参加。
-image: /images/kadota.webp
+image: /images/staff/kadotayuuichi.webp
 order: 2
 featured: true
 skills:
