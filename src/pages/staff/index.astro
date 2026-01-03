@@ -41,7 +41,7 @@ const tagNames = new Set(allTags.map((t) => t.tag));
                   <img
                     src={staff.data.image}
                     alt={staff.data.name}
-                    class="staff-img w-full h-full object-cover"
+                    class="staff-img w-full h-full object-contain"
                     loading="lazy"
                     decoding="async"
                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
