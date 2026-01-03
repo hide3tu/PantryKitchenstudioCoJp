@@ -10,12 +10,7 @@ Astro + Tailwind CSS v4 でサイトのUI実装が完了しました。
 
 ### 必須
 
-1. **スタッフ画像（1名分）**
-   - `/public/images/staff/kadotayuuichi.webp` - 門田雄一
-   - 推奨サイズ: 400x400px（正方形）
-   - ※逢空万太、川越卓弘の画像は追加済み
-
-2. **問い合わせフォーム送信機能**
+1. **問い合わせフォーム送信機能**
    - reCAPTCHA 導入
    - PHP送信処理（`public/api/contact.php`）
    - `.htaccess` 設定
