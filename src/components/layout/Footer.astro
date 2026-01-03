@@ -1,0 +1,81 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-[var(--color-muted)] border-t border-[var(--color-border)]">
+  <div class="container-content py-16">
+    <div class="grid md:grid-cols-3 gap-12">
+      <!-- ブランド -->
+      <div>
+        <a href="/" class="inline-block">
+          <span class="font-display text-xl tracking-wider">Text Pantry</span>
+        </a>
+        <p class="mt-4 text-sm text-[var(--color-muted-foreground)] leading-relaxed">
+          クリエイティブ執筆・シナリオ制作。<br />
+          物語を紡ぐプロフェッショナル集団。
+        </p>
+      </div>
+
+      <!-- ナビゲーション -->
+      <div>
+        <h3 class="font-medium text-sm tracking-wider mb-4">ページ</h3>
+        <ul class="space-y-3">
+          <li>
+            <a
+              href="/"
+              class="text-sm text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors"
+            >
+              ホーム
+            </a>
+          </li>
+          <li>
+            <a
+              href="/staff/"
+              class="text-sm text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors"
+            >
+              スタッフ
+            </a>
+          </li>
+          <li>
+            <a
+              href="/works/"
+              class="text-sm text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors"
+            >
+              仕事一覧
+            </a>
+          </li>
+          <li>
+            <a
+              href="/contact/"
+              class="text-sm text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors"
+            >
+              お問い合わせ
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- コンタクト -->
+      <div>
+        <h3 class="font-medium text-sm tracking-wider mb-4">お問い合わせ</h3>
+        <p class="text-sm text-[var(--color-muted-foreground)] leading-relaxed">
+          お仕事のご依頼・ご相談は<br />
+          <a
+            href="/contact/"
+            class="underline underline-offset-4 hover:text-[var(--color-foreground)] transition-colors"
+          >
+            お問い合わせフォーム
+          </a>
+          よりお願いいたします。
+        </p>
+      </div>
+    </div>
+
+    <!-- コピーライト -->
+    <div class="mt-16 pt-8 border-t border-[var(--color-border)]">
+      <p class="text-xs text-[var(--color-muted-foreground)] text-center">
+        &copy; {currentYear} テキストパントリー / Kitchen Studio Inc. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>

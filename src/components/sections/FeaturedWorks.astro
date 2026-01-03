@@ -1,0 +1,41 @@
+---
+import { getCollection } from "astro:content";
+import SectionHeading from "@components/ui/SectionHeading.astro";
+import WorkCard from "@components/ui/WorkCard.astro";
+import Button from "@components/ui/Button.astro";
+
+const featuredWorks = await getCollection("works", ({ data }) => data.featured);
+const sortedWorks = featuredWorks.sort((a, b) => b.data.year - a.data.year).slice(0, 6);
+---
+
+<section class="section-spacing">
+  <div class="container-content">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+      <SectionHeading
+        title="主な作品"
+        titleEn="Featured Works"
+        subtitle="これまで手掛けた代表的な作品をご紹介します"
+        class="mb-0"
+      />
+      <Button href="/works/" variant="secondary" class="self-start md:self-auto">
+        すべての作品を見る →
+      </Button>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+      {
+        sortedWorks.map((work) => (
+          <WorkCard
+            slug={work.id}
+            title={work.data.title}
+            category={work.data.category}
+            year={work.data.year}
+            thumbnail={work.data.thumbnail}
+            description={work.data.description}
+            client={work.data.client}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,40 @@
+---
+import { getCollection } from "astro:content";
+import SectionHeading from "@components/ui/SectionHeading.astro";
+import StaffCard from "@components/ui/StaffCard.astro";
+import Button from "@components/ui/Button.astro";
+
+const allStaff = await getCollection("staff");
+const sortedStaff = allStaff.sort((a, b) => a.data.order - b.data.order);
+---
+
+<section class="section-spacing bg-[var(--color-muted)]">
+  <div class="container-content">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+      <SectionHeading
+        title="スタッフ紹介"
+        titleEn="Staff"
+        subtitle="物語を紡ぐプロフェッショナルたち"
+        class="mb-0"
+      />
+      <Button href="/staff/" variant="secondary" class="self-start md:self-auto">
+        詳しく見る →
+      </Button>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        sortedStaff.map((staff) => (
+          <StaffCard
+            slug={staff.id}
+            name={staff.data.name}
+            nameEn={staff.data.nameEn}
+            role={staff.data.role}
+            bio={staff.data.bio}
+            image={staff.data.image}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>

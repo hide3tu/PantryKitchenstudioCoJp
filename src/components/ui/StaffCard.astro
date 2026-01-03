@@ -1,0 +1,59 @@
+---
+interface Props {
+  slug: string;
+  name: string;
+  nameEn?: string;
+  role: string;
+  bio: string;
+  image: string;
+}
+
+const { slug, name, nameEn, role, bio, image } = Astro.props;
+---
+
+<article class="group">
+  <div class="flex gap-6 items-start">
+    <!-- 画像 -->
+    <div class="flex-shrink-0 w-24 h-24 md:w-32 md:h-32 overflow-hidden bg-[var(--color-muted)]">
+      <img
+        src={image}
+        alt={name}
+        class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+
+    <!-- コンテンツ -->
+    <div class="flex-1 min-w-0">
+      <!-- 名前 -->
+      <div class="mb-2">
+        {
+          nameEn && (
+            <span class="font-display text-xs text-[var(--color-muted-foreground)] block">
+              {nameEn}
+            </span>
+          )
+        }
+        <h3 class="text-xl font-serif">{name}</h3>
+      </div>
+
+      <!-- 役職 -->
+      <p class="text-sm text-[var(--color-muted-foreground)] mb-3">{role}</p>
+
+      <!-- 略歴 -->
+      <p class="text-sm text-[var(--color-muted-foreground)] leading-relaxed line-clamp-3">
+        {bio}
+      </p>
+    </div>
+  </div>
+</article>
+
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

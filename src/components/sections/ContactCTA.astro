@@ -1,0 +1,43 @@
+---
+import Button from "@components/ui/Button.astro";
+---
+
+<section class="section-spacing">
+  <div class="container-content">
+    <div class="relative bg-[var(--color-foreground)] text-[var(--color-background)] p-12 md:p-20">
+      <!-- 装飾 -->
+      <div class="absolute top-6 left-6 font-display text-6xl md:text-8xl opacity-10">
+        P
+      </div>
+
+      <div class="relative z-10 max-w-2xl">
+        <span class="font-display text-sm tracking-[0.3em] opacity-60 block mb-4">
+          Contact Us
+        </span>
+
+        <h2 class="text-2xl md:text-3xl lg:text-4xl font-serif mb-6">
+          お仕事のご依頼・ご相談は<br />
+          お気軽にどうぞ
+        </h2>
+
+        <p class="opacity-80 leading-relaxed mb-8">
+          シナリオ制作、ノベライズ、企画段階からのご相談など、<br class="hidden md:block" />
+          まずはお問い合わせフォームよりご連絡ください。
+        </p>
+
+        <Button
+          href="/contact/"
+          variant="secondary"
+          size="large"
+          class="border-[var(--color-background)] text-[var(--color-background)] hover:bg-[var(--color-background)] hover:text-[var(--color-foreground)]"
+        >
+          お問い合わせフォームへ
+        </Button>
+      </div>
+
+      <!-- 装飾線 -->
+      <div class="absolute bottom-0 right-0 w-1/3 h-px bg-[var(--color-background)] opacity-20" />
+      <div class="absolute bottom-0 right-0 w-px h-1/3 bg-[var(--color-background)] opacity-20" />
+    </div>
+  </div>
+</section>

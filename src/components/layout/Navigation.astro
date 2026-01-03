@@ -1,0 +1,47 @@
+---
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+const navItems = [
+  { href: "/", label: "ホーム", labelEn: "Home" },
+  { href: "/staff/", label: "スタッフ", labelEn: "Staff" },
+  { href: "/works/", label: "仕事一覧", labelEn: "Works" },
+  { href: "/contact/", label: "お問い合わせ", labelEn: "Contact" },
+];
+
+function isActive(href: string, current: string): boolean {
+  if (href === "/") return current === "/";
+  return current.startsWith(href);
+}
+---
+
+<nav class="hidden md:block">
+  <ul class="flex items-center gap-8">
+    {
+      navItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class:list={[
+              "relative py-2 text-sm tracking-wide transition-colors",
+              isActive(item.href, currentPath)
+                ? "text-[var(--color-foreground)]"
+                : "text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]",
+            ]}
+          >
+            <span class="font-display text-xs uppercase mr-1 opacity-60">
+              {item.labelEn}
+            </span>
+            <span>{item.label}</span>
+            {isActive(item.href, currentPath) && (
+              <span class="absolute -bottom-px left-0 right-0 h-px bg-[var(--color-foreground)]" />
+            )}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

@@ -1,0 +1,64 @@
+---
+import Button from "@components/ui/Button.astro";
+---
+
+<section class="relative min-h-[80vh] flex items-center">
+  <!-- 背景装飾 -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="absolute top-1/4 -right-1/4 w-[600px] h-[600px] bg-[var(--color-muted)] rounded-full blur-3xl opacity-50" />
+    <div class="absolute -bottom-1/4 -left-1/4 w-[400px] h-[400px] bg-[var(--color-muted)] rounded-full blur-3xl opacity-30" />
+  </div>
+
+  <div class="container-content relative z-10 py-20">
+    <div class="max-w-3xl">
+      <!-- キャッチコピー -->
+      <p class="font-display text-sm tracking-[0.3em] text-[var(--color-muted-foreground)] mb-6 animate-fade-in-up stagger-1">
+        Creative Writing Studio
+      </p>
+
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif leading-tight animate-fade-in-up stagger-2">
+        物語を、<br />
+        <span class="font-display italic">Pantry</span>から。
+      </h1>
+
+      <p class="mt-8 text-lg md:text-xl text-[var(--color-muted-foreground)] leading-relaxed max-w-2xl animate-fade-in-up stagger-3">
+        テキストパントリーは、ゲームシナリオ・ノベライズ・アニメ脚本など、<br class="hidden md:block" />
+        あらゆる物語を紡ぐクリエイティブ執筆スタジオです。
+      </p>
+
+      <div class="mt-12 flex flex-wrap gap-4 animate-fade-in-up stagger-4">
+        <Button href="/works/" variant="primary" size="large">
+          仕事一覧を見る
+        </Button>
+        <Button href="/contact/" variant="secondary" size="large">
+          お問い合わせ
+        </Button>
+      </div>
+    </div>
+  </div>
+
+  <!-- スクロールインジケーター -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in-up stagger-5">
+    <div class="flex flex-col items-center gap-2 text-[var(--color-muted-foreground)]">
+      <span class="text-xs tracking-widest font-display">Scroll</span>
+      <div class="w-px h-12 bg-[var(--color-border)] relative overflow-hidden">
+        <div class="absolute inset-x-0 top-0 h-1/2 bg-[var(--color-foreground)] animate-scroll-down" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes scroll-down {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(200%);
+    }
+  }
+
+  .animate-scroll-down {
+    animation: scroll-down 2s ease-in-out infinite;
+  }
+</style>

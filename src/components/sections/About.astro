@@ -1,0 +1,50 @@
+---
+import SectionHeading from "@components/ui/SectionHeading.astro";
+---
+
+<section class="section-spacing bg-[var(--color-muted)]">
+  <div class="container-content">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <!-- テキスト -->
+      <div>
+        <SectionHeading
+          title="テキストパントリーについて"
+          titleEn="About Us"
+        />
+
+        <div class="space-y-6 text-[var(--color-muted-foreground)]">
+          <p class="text-lg leading-relaxed">
+            「パントリー」は食材を保管する場所。<br />
+            私たちは、物語の素材となるアイデアや言葉を大切に蓄え、<br />
+            最高の「料理」に仕上げてお届けします。
+          </p>
+
+          <p class="leading-relaxed">
+            ゲームシナリオ、ライトノベル、アニメ脚本、ドラマCD——<br />
+            様々なメディアで培った経験と技術で、<br />
+            お客様のプロジェクトに最適な物語をご提供いたします。
+          </p>
+
+          <p class="leading-relaxed">
+            企画段階からのご相談も承ります。<br />
+            まずはお気軽にお問い合わせください。
+          </p>
+        </div>
+      </div>
+
+      <!-- ビジュアル -->
+      <div class="relative">
+        <div class="aspect-[4/3] bg-[var(--color-background)] border border-[var(--color-border)] flex items-center justify-center">
+          <div class="text-center p-12">
+            <span class="font-display text-8xl text-[var(--color-border)]">P</span>
+            <p class="mt-4 font-display text-sm tracking-[0.3em] text-[var(--color-muted-foreground)]">
+              Text Pantry
+            </p>
+          </div>
+        </div>
+        <!-- 装飾 -->
+        <div class="absolute -bottom-4 -right-4 w-full h-full border border-[var(--color-border)] -z-10" />
+      </div>
+    </div>
+  </div>
+</section>

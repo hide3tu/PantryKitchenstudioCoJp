@@ -1,0 +1,83 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import SectionHeading from "@components/ui/SectionHeading.astro";
+import WorkCard from "@components/ui/WorkCard.astro";
+
+const allWorks = await getCollection("works");
+const sortedWorks = allWorks.sort((a, b) =>
+  b.data.year - a.data.year || a.data.order - b.data.order
+);
+
+// カテゴリでグループ化
+const categories = ["game", "novel", "anime", "drama-cd", "manga", "other"] as const;
+const categoryLabels: Record<string, string> = {
+  novel: "ノベライズ",
+  game: "ゲーム",
+  anime: "アニメ",
+  manga: "マンガ",
+  "drama-cd": "ドラマCD",
+  other: "その他",
+};
+
+// 年でグループ化
+const worksByYear = sortedWorks.reduce(
+  (acc, work) => {
+    const year = work.data.year;
+    if (!acc[year]) acc[year] = [];
+    acc[year].push(work);
+    return acc;
+  },
+  {} as Record<number, typeof sortedWorks>
+);
+
+const years = Object.keys(worksByYear)
+  .map(Number)
+  .sort((a, b) => b - a);
+---
+
+<BaseLayout
+  title="仕事一覧"
+  description="テキストパントリーが手掛けた作品一覧です。ゲームシナリオ、ノベライズ、アニメ脚本など、様々な作品をご紹介します。"
+>
+  <section class="section-spacing">
+    <div class="container-content">
+      <SectionHeading
+        title="仕事一覧"
+        titleEn="Works"
+        subtitle="これまで手掛けた作品をご紹介します"
+        align="center"
+      />
+
+      <!-- 作品グリッド（年別） -->
+      <div class="mt-16 space-y-20">
+        {
+          years.map((year) => (
+            <div>
+              <div class="flex items-center gap-4 mb-8">
+                <span class="font-display text-4xl text-[var(--color-border)]">
+                  {year}
+                </span>
+                <div class="flex-1 h-px bg-[var(--color-border)]" />
+              </div>
+
+              <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+                {worksByYear[year].map((work) => (
+                  <WorkCard
+                    slug={work.id}
+                    title={work.data.title}
+                    category={work.data.category}
+                    year={work.data.year}
+                    thumbnail={work.data.thumbnail}
+                    description={work.data.description}
+                    client={work.data.client}
+                  />
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

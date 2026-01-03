@@ -1,0 +1,84 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  category: string;
+  year: number;
+  thumbnail?: string;
+  description: string;
+  client?: string;
+}
+
+const { slug, title, category, year, thumbnail, description, client } = Astro.props;
+
+const categoryLabels: Record<string, string> = {
+  novel: "ノベライズ",
+  game: "ゲーム",
+  anime: "アニメ",
+  manga: "マンガ",
+  "drama-cd": "ドラマCD",
+  other: "その他",
+};
+---
+
+<article class="group">
+  <a href={`/works/${slug}/`} class="block">
+    <!-- サムネイル -->
+    <div class="relative aspect-[4/3] overflow-hidden bg-[var(--color-muted)] mb-4">
+      {
+        thumbnail ? (
+          <img
+            src={thumbnail}
+            alt={title}
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div class="w-full h-full flex items-center justify-center">
+            <span class="font-display text-4xl text-[var(--color-border)]">P</span>
+          </div>
+        )
+      }
+      <!-- オーバーレイ -->
+      <div class="absolute inset-0 bg-[var(--color-foreground)]/0 group-hover:bg-[var(--color-foreground)]/5 transition-colors duration-300" />
+    </div>
+
+    <!-- コンテンツ -->
+    <div>
+      <!-- メタ情報 -->
+      <div class="flex items-center gap-3 text-xs text-[var(--color-muted-foreground)] mb-2">
+        <span class="font-display">{year}</span>
+        <span class="w-px h-3 bg-[var(--color-border)]" />
+        <span>{categoryLabels[category] || category}</span>
+        {
+          client && (
+            <>
+              <span class="w-px h-3 bg-[var(--color-border)]" />
+              <span>{client}</span>
+            </>
+          )
+        }
+      </div>
+
+      <!-- タイトル -->
+      <h3 class="text-lg font-serif leading-snug group-hover:text-[var(--color-muted-foreground)] transition-colors">
+        {title}
+      </h3>
+
+      <!-- 説明 -->
+      <p class="mt-2 text-sm text-[var(--color-muted-foreground)] line-clamp-2">
+        {description}
+      </p>
+    </div>
+  </a>
+</article>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

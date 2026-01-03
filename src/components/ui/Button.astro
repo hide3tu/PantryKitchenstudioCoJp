@@ -1,0 +1,46 @@
+---
+interface Props {
+  href?: string;
+  variant?: "primary" | "secondary" | "ghost";
+  size?: "default" | "small" | "large";
+  class?: string;
+  type?: "button" | "submit";
+}
+
+const {
+  href,
+  variant = "primary",
+  size = "default",
+  class: className,
+  type = "button",
+} = Astro.props;
+
+const baseStyles = "inline-flex items-center justify-center font-medium tracking-wide transition-all duration-300";
+
+const variantStyles = {
+  primary: "btn-primary",
+  secondary: "btn-secondary",
+  ghost: "btn-ghost",
+};
+
+const sizeStyles = {
+  small: "px-4 py-2 text-sm",
+  default: "px-6 py-3 text-sm",
+  large: "px-8 py-4 text-base",
+};
+
+const Tag = href ? "a" : "button";
+---
+
+<Tag
+  href={href}
+  type={!href ? type : undefined}
+  class:list={[
+    baseStyles,
+    variantStyles[variant],
+    sizeStyles[size],
+    className,
+  ]}
+>
+  <slot />
+</Tag>

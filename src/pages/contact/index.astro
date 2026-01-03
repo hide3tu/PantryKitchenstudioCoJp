@@ -1,0 +1,134 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import SectionHeading from "@components/ui/SectionHeading.astro";
+import Button from "@components/ui/Button.astro";
+---
+
+<BaseLayout
+  title="お問い合わせ"
+  description="テキストパントリーへのお仕事のご依頼・ご相談はこちらから。シナリオ制作、ノベライズ、企画段階からのご相談など、お気軽にお問い合わせください。"
+>
+  <section class="section-spacing">
+    <div class="container-narrow">
+      <SectionHeading
+        title="お問い合わせ"
+        titleEn="Contact"
+        subtitle="お仕事のご依頼・ご相談はこちらから"
+        align="center"
+      />
+
+      <div class="mt-12 max-w-xl mx-auto">
+        <form id="contact-form" class="space-y-8">
+          <!-- 会社名 -->
+          <div>
+            <label for="company" class="block text-sm font-medium mb-2">
+              会社名・団体名
+            </label>
+            <input
+              type="text"
+              id="company"
+              name="company"
+              class="w-full px-4 py-3 border border-[var(--color-border)] bg-[var(--color-background)] focus:outline-none focus:border-[var(--color-foreground)] transition-colors"
+              placeholder="株式会社○○"
+            />
+          </div>
+
+          <!-- お名前 -->
+          <div>
+            <label for="name" class="block text-sm font-medium mb-2">
+              お名前 <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              class="w-full px-4 py-3 border border-[var(--color-border)] bg-[var(--color-background)] focus:outline-none focus:border-[var(--color-foreground)] transition-colors"
+              placeholder="山田 太郎"
+            />
+          </div>
+
+          <!-- メールアドレス -->
+          <div>
+            <label for="email" class="block text-sm font-medium mb-2">
+              メールアドレス <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              class="w-full px-4 py-3 border border-[var(--color-border)] bg-[var(--color-background)] focus:outline-none focus:border-[var(--color-foreground)] transition-colors"
+              placeholder="example@example.com"
+            />
+          </div>
+
+          <!-- 電話番号 -->
+          <div>
+            <label for="phone" class="block text-sm font-medium mb-2">
+              電話番号
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              class="w-full px-4 py-3 border border-[var(--color-border)] bg-[var(--color-background)] focus:outline-none focus:border-[var(--color-foreground)] transition-colors"
+              placeholder="03-1234-5678"
+            />
+          </div>
+
+          <!-- お問い合わせ種別 -->
+          <div>
+            <label for="type" class="block text-sm font-medium mb-2">
+              お問い合わせ種別 <span class="text-red-500">*</span>
+            </label>
+            <select
+              id="type"
+              name="type"
+              required
+              class="w-full px-4 py-3 border border-[var(--color-border)] bg-[var(--color-background)] focus:outline-none focus:border-[var(--color-foreground)] transition-colors"
+            >
+              <option value="">選択してください</option>
+              <option value="scenario">シナリオ制作のご依頼</option>
+              <option value="novel">ノベライズのご依頼</option>
+              <option value="consulting">企画・コンサルティング</option>
+              <option value="other">その他のお問い合わせ</option>
+            </select>
+          </div>
+
+          <!-- お問い合わせ内容 -->
+          <div>
+            <label for="message" class="block text-sm font-medium mb-2">
+              お問い合わせ内容 <span class="text-red-500">*</span>
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              rows="8"
+              class="w-full px-4 py-3 border border-[var(--color-border)] bg-[var(--color-background)] focus:outline-none focus:border-[var(--color-foreground)] transition-colors resize-none"
+              placeholder="ご依頼内容やご相談事項をご記入ください"
+            ></textarea>
+          </div>
+
+          <!-- 送信ボタン -->
+          <div class="pt-4">
+            <Button type="submit" variant="primary" size="large" class="w-full">
+              送信する
+            </Button>
+          </div>
+        </form>
+
+        <!-- 注意事項 -->
+        <div class="mt-12 p-6 bg-[var(--color-muted)] text-sm text-[var(--color-muted-foreground)]">
+          <h3 class="font-medium text-[var(--color-foreground)] mb-3">ご注意事項</h3>
+          <ul class="space-y-2 list-disc list-inside">
+            <li>通常、3営業日以内にご返信いたします。</li>
+            <li>お急ぎの場合はその旨をお問い合わせ内容にご記載ください。</li>
+            <li>内容によってはお返事できない場合がございます。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,222 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Button from "@components/ui/Button.astro";
+
+export async function getStaticPaths() {
+  const works = await getCollection("works");
+  return works.map((work) => ({
+    params: { slug: work.id },
+    props: { work },
+  }));
+}
+
+const { work } = Astro.props;
+const { Content } = await render(work);
+
+const categoryLabels: Record<string, string> = {
+  novel: "ノベライズ",
+  game: "ゲーム",
+  anime: "アニメ",
+  manga: "マンガ",
+  "drama-cd": "ドラマCD",
+  other: "その他",
+};
+
+// 前後の作品を取得
+const allWorks = await getCollection("works");
+const sortedWorks = allWorks.sort((a, b) => b.data.year - a.data.year);
+const currentIndex = sortedWorks.findIndex((w) => w.id === work.id);
+const prevWork = sortedWorks[currentIndex - 1];
+const nextWork = sortedWorks[currentIndex + 1];
+---
+
+<BaseLayout
+  title={work.data.title}
+  description={work.data.description}
+  ogImage={work.data.thumbnail}
+>
+  <article>
+    <!-- ヘッダー -->
+    <header class="section-spacing bg-[var(--color-muted)]">
+      <div class="container-content">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <!-- サムネイル -->
+          <div class="order-2 lg:order-1">
+            {
+              work.data.thumbnail ? (
+                <div class="aspect-[4/3] overflow-hidden bg-[var(--color-background)]">
+                  <img
+                    src={work.data.thumbnail}
+                    alt={work.data.title}
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+              ) : (
+                <div class="aspect-[4/3] bg-[var(--color-background)] flex items-center justify-center">
+                  <span class="font-display text-8xl text-[var(--color-border)]">
+                    P
+                  </span>
+                </div>
+              )
+            }
+          </div>
+
+          <!-- 情報 -->
+          <div class="order-1 lg:order-2">
+            <div class="flex items-center gap-3 text-sm text-[var(--color-muted-foreground)] mb-4">
+              <span class="font-display">{work.data.year}</span>
+              <span class="w-px h-4 bg-[var(--color-border)]" />
+              <span>{categoryLabels[work.data.category]}</span>
+              {
+                work.data.client && (
+                  <>
+                    <span class="w-px h-4 bg-[var(--color-border)]" />
+                    <span>{work.data.client}</span>
+                  </>
+                )
+              }
+            </div>
+
+            {
+              work.data.titleEn && (
+                <span class="font-display text-sm text-[var(--color-muted-foreground)] block mb-2">
+                  {work.data.titleEn}
+                </span>
+              )
+            }
+
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-serif mb-6">
+              {work.data.title}
+            </h1>
+
+            <p class="text-lg text-[var(--color-muted-foreground)] leading-relaxed mb-8">
+              {work.data.description}
+            </p>
+
+            {
+              work.data.tags && work.data.tags.length > 0 && (
+                <div class="flex flex-wrap gap-2 mb-8">
+                  {work.data.tags.map((tag) => (
+                    <span class="px-3 py-1 text-sm border border-[var(--color-border)]">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )
+            }
+
+            {
+              work.data.externalUrl && (
+                <Button
+                  href={work.data.externalUrl}
+                  variant="secondary"
+                >
+                  公式サイトを見る →
+                </Button>
+              )
+            }
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 本文 -->
+    <section class="section-spacing">
+      <div class="container-narrow prose prose-lg">
+        <Content />
+      </div>
+    </section>
+
+    <!-- 担当スタッフ -->
+    {
+      work.data.staff && work.data.staff.length > 0 && (
+        <section class="py-12 border-t border-[var(--color-border)]">
+          <div class="container-narrow">
+            <h2 class="text-sm font-medium mb-4">担当スタッフ</h2>
+            <div class="flex flex-wrap gap-4">
+              {work.data.staff.map((staffName) => (
+                <span class="text-[var(--color-muted-foreground)]">
+                  {staffName}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- ナビゲーション -->
+    <nav class="border-t border-[var(--color-border)]">
+      <div class="container-content">
+        <div class="grid md:grid-cols-2">
+          {
+            prevWork ? (
+              <a
+                href={`/works/${prevWork.id}/`}
+                class="group py-8 pr-8 border-b md:border-b-0 md:border-r border-[var(--color-border)]"
+              >
+                <span class="text-xs text-[var(--color-muted-foreground)] block mb-2">
+                  ← 前の作品
+                </span>
+                <span class="text-lg font-serif group-hover:text-[var(--color-muted-foreground)] transition-colors">
+                  {prevWork.data.title}
+                </span>
+              </a>
+            ) : (
+              <div class="hidden md:block" />
+            )
+          }
+          {
+            nextWork ? (
+              <a
+                href={`/works/${nextWork.id}/`}
+                class="group py-8 pl-0 md:pl-8 text-right"
+              >
+                <span class="text-xs text-[var(--color-muted-foreground)] block mb-2">
+                  次の作品 →
+                </span>
+                <span class="text-lg font-serif group-hover:text-[var(--color-muted-foreground)] transition-colors">
+                  {nextWork.data.title}
+                </span>
+              </a>
+            ) : (
+              <div />
+            )
+          }
+        </div>
+      </div>
+    </nav>
+
+    <!-- 一覧に戻る -->
+    <div class="py-12 text-center border-t border-[var(--color-border)]">
+      <Button href="/works/" variant="ghost">
+        ← 仕事一覧に戻る
+      </Button>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .prose :global(p) {
+    margin-bottom: 1.5em;
+    color: var(--color-muted-foreground);
+  }
+
+  .prose :global(h2) {
+    font-family: var(--font-serif);
+    margin-top: 2em;
+    margin-bottom: 1em;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin-bottom: 1.5em;
+    padding-left: 1.5em;
+    color: var(--color-muted-foreground);
+  }
+
+  .prose :global(li) {
+    margin-bottom: 0.5em;
+  }
+</style>
