@@ -113,11 +113,51 @@ import Button from "@components/ui/Button.astro";
 
           <!-- 送信ボタン -->
           <div class="pt-4">
-            <Button type="submit" variant="primary" size="large" class="w-full">
+            <button
+              type="submit"
+              id="submit-btn"
+              class="w-full inline-flex items-center justify-center font-medium tracking-wide transition-all duration-300 btn-primary px-8 py-4 text-base"
+            >
               送信する
-            </Button>
+            </button>
           </div>
+
         </form>
+
+        <!-- 送信完了モーダル -->
+        <div id="success-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+          <div class="bg-[var(--color-background)] p-8 max-w-md mx-4 text-center shadow-xl">
+            <div class="text-4xl mb-4">✓</div>
+            <h3 class="text-xl font-bold mb-4">送信完了</h3>
+            <p class="text-[var(--color-muted-foreground)] mb-6">
+              お問い合わせを受け付けました。<br>
+              3営業日以内にご返信いたします。
+            </p>
+            <button
+              id="close-modal"
+              class="inline-flex items-center justify-center font-medium tracking-wide transition-all duration-300 btn-primary px-6 py-3"
+            >
+              閉じる
+            </button>
+          </div>
+        </div>
+
+        <!-- エラーモーダル -->
+        <div id="error-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+          <div class="bg-[var(--color-background)] p-8 max-w-md mx-4 text-center shadow-xl">
+            <div class="text-4xl mb-4 text-red-500">✕</div>
+            <h3 class="text-xl font-bold mb-4">送信失敗</h3>
+            <p id="error-message" class="text-[var(--color-muted-foreground)] mb-6">
+              送信に失敗しました。時間をおいて再度お試しください。
+            </p>
+            <button
+              id="close-error-modal"
+              class="inline-flex items-center justify-center font-medium tracking-wide transition-all duration-300 btn-primary px-6 py-3"
+            >
+              閉じる
+            </button>
+          </div>
+        </div>
 
         <!-- 注意事項 -->
         <div class="mt-12 p-6 bg-[var(--color-muted)] text-sm text-[var(--color-muted-foreground)]">
@@ -131,4 +171,86 @@ import Button from "@components/ui/Button.astro";
       </div>
     </div>
   </section>
+  <!-- reCAPTCHA v3 スクリプト -->
+  <script is:inline src="https://www.google.com/recaptcha/api.js?render=6LdK5LoqAAAAAB41SZ87bucgwOXSfT4FOL7I1Res"></script>
+
+  <!-- フォーム送信処理 -->
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('contact-form');
+      const submitBtn = document.getElementById('submit-btn');
+      const successModal = document.getElementById('success-modal');
+      const errorModal = document.getElementById('error-modal');
+      const errorMessage = document.getElementById('error-message');
+      const closeModalBtn = document.getElementById('close-modal');
+      const closeErrorModalBtn = document.getElementById('close-error-modal');
+
+      // モーダルを表示
+      function showModal(modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      }
+
+      // モーダルを閉じる
+      function hideModal(modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = '';
+      }
+
+      // 閉じるボタン
+      closeModalBtn.addEventListener('click', function() {
+        hideModal(successModal);
+      });
+      closeErrorModalBtn.addEventListener('click', function() {
+        hideModal(errorModal);
+      });
+
+      // 背景クリックで閉じる
+      successModal.addEventListener('click', function(e) {
+        if (e.target === successModal) hideModal(successModal);
+      });
+      errorModal.addEventListener('click', function(e) {
+        if (e.target === errorModal) hideModal(errorModal);
+      });
+
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        // ボタンを無効化
+        submitBtn.disabled = true;
+        submitBtn.textContent = '送信中...';
+
+        try {
+          // reCAPTCHA v3 トークン取得
+          const token = await grecaptcha.execute('6LdK5LoqAAAAAB41SZ87bucgwOXSfT4FOL7I1Res', { action: 'contact' });
+
+          const formData = new FormData(form);
+          formData.append('g-recaptcha-response', token);
+
+          const response = await fetch('/api/contact.php', {
+            method: 'POST',
+            body: formData
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            form.reset();
+            showModal(successModal);
+          } else {
+            errorMessage.textContent = result.message || '送信に失敗しました。時間をおいて再度お試しください。';
+            showModal(errorModal);
+          }
+        } catch (error) {
+          errorMessage.textContent = '送信に失敗しました。時間をおいて再度お試しください。';
+          showModal(errorModal);
+        }
+
+        submitBtn.disabled = false;
+        submitBtn.textContent = '送信する';
+      });
+    });
+  </script>
 </BaseLayout>

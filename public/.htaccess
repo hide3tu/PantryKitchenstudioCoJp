@@ -1,0 +1,17 @@
+# PHP処理を有効化
+<FilesMatch "\.php$">
+    SetHandler application/x-httpd-php
+</FilesMatch>
+
+# セキュリティヘッダー
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# ディレクトリリスティング無効化
+Options -Indexes
+
+# エラーページ
+ErrorDocument 404 /404.html
