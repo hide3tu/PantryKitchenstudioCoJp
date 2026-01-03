@@ -1,0 +1,65 @@
+---
+interface Props {
+  tags: { tag: string; count: number }[];
+  currentTag?: string;
+}
+
+const { tags, currentTag } = Astro.props;
+---
+
+<nav class="mb-12" aria-label="タグフィルター">
+  <div class="flex flex-wrap gap-2 items-center">
+    <!-- 全件表示リンク -->
+    <a
+      href="/works/"
+      class:list={[
+        "px-3 py-1.5 text-sm border transition-all duration-300",
+        !currentTag
+          ? "tag-active"
+          : "tag-inactive",
+      ]}
+    >
+      すべて
+    </a>
+
+    {
+      tags.map(({ tag, count }) => (
+        <a
+          href={`/works/tag/${tag}/`}
+          class:list={[
+            "px-3 py-1.5 text-sm border transition-all duration-300",
+            currentTag === tag
+              ? "tag-active"
+              : "tag-inactive",
+          ]}
+        >
+          {tag}
+          <span class="ml-1 opacity-60">({count})</span>
+        </a>
+      ))
+    }
+  </div>
+</nav>
+
+<style>
+  .tag-active {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border-color: #1a1a1a;
+  }
+
+  .tag-active:hover {
+    opacity: 1;
+  }
+
+  .tag-inactive {
+    border-color: var(--color-border);
+  }
+
+  .tag-inactive:hover {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border-color: #1a1a1a;
+    opacity: 1;
+  }
+</style>

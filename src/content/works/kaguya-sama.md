@@ -12,8 +12,7 @@ staff:
 featured: false
 order: 9
 tags:
-  - ライトノベル
-  - 小説
+  - シナリオ
 ---
 
 2016年1月15日発売のライトノベル。

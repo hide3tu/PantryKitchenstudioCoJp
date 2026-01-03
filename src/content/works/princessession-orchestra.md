@@ -11,7 +11,7 @@ staff:
 featured: true
 order: 1
 tags:
-  - TVアニメ
+  - アニメ
   - シリーズ構成
   - 脚本
 ---

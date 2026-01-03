@@ -7,12 +7,12 @@ image: /images/staff/kadotayuuichi.webp
 order: 2
 featured: true
 skills:
-  - アニメ脚本
-  - ゲームシナリオ
-  - ゲーム設定
-  - コンシューマーゲーム
-  - スマートフォンゲーム
-  - PCゲーム
+  - アニメ
+  - ゲーム
+  - シナリオ
+  - 脚本
+  - コンシューマ
+  - 小説
 social: {}
 ---
 

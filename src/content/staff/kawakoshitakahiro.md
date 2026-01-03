@@ -7,13 +7,8 @@ image: /images/staff/kawakoshitakahiro.webp
 order: 3
 featured: true
 skills:
-  - アニメ演出
+  - アニメ
   - 脚本
-  - 絵コンテ
-  - 助監督
-  - 副監督
-  - チーフディレクター
-  - 音響監督
 social:
   twitter: https://twitter.com/kawakoshitakahiro
   website: https://kawakoshitakahiro.com

@@ -9,7 +9,7 @@ description: 漫画「だがしかし」の関連作品。
 featured: false
 order: 11
 tags:
-  - 関連作品
+  - シナリオ
 ---
 
 2015年12月18日発売の作品。

@@ -11,8 +11,7 @@ staff:
 featured: false
 order: 14
 tags:
-  - コミック
-  - スピンオフ
+  - 漫画
 ---
 
 2012年4月20日発売のコミック作品。

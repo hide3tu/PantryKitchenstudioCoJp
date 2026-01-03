@@ -12,8 +12,7 @@ staff:
 featured: false
 order: 12
 tags:
-  - Web連載
-  - 小説
+  - ライトノベル
 ---
 
 2015年2月14日発売の作品。

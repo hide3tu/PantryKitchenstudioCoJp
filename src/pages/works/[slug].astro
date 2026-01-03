@@ -97,12 +97,15 @@ const nextWork = sortedWorks[currentIndex + 1];
             </p>
 
             {
-              work.data.tags && work.data.tags.length > 0 && (
+              work.data.tags && work.data.tags.length > 0 && work.data.tags.some((t) => t.trim()) && (
                 <div class="flex flex-wrap gap-2 mb-8">
-                  {work.data.tags.map((tag) => (
-                    <span class="px-3 py-1 text-sm border border-[var(--color-border)]">
+                  {work.data.tags.filter((t) => t.trim()).map((tag) => (
+                    <a
+                      href={`/works/tag/${tag}/`}
+                      class="px-3 py-1 text-sm border border-[var(--color-border)] hover:bg-[var(--color-foreground)] hover:text-[var(--color-background)] hover:border-[var(--color-foreground)] transition-all duration-300"
+                    >
                       {tag}
-                    </span>
+                    </a>
                   ))}
                 </div>
               )

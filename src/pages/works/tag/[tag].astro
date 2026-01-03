@@ -7,32 +7,42 @@ import YearNav from "@components/ui/YearNav.astro";
 import TagFilter from "@components/ui/TagFilter.astro";
 import { getAllTags } from "@lib/tags";
 
-const allWorks = await getCollection("works");
-const allTags = await getAllTags();
-const sortedWorks = allWorks.sort((a, b) =>
-  b.data.year - a.data.year || a.data.order - b.data.order
-);
+export async function getStaticPaths() {
+  const works = await getCollection("works");
+  const tagSet = new Set<string>();
 
-// カテゴリでグループ化
-const categories = ["game", "novel", "anime", "drama-cd", "manga", "other"] as const;
-const categoryLabels: Record<string, string> = {
-  novel: "ノベライズ",
-  game: "ゲーム",
-  anime: "アニメ",
-  manga: "マンガ",
-  "drama-cd": "ドラマCD",
-  other: "その他",
-};
+  works.forEach((work) => {
+    work.data.tags?.forEach((tag) => {
+      if (tag.trim()) {
+        tagSet.add(tag);
+      }
+    });
+  });
+
+  return Array.from(tagSet).map((tag) => ({
+    params: { tag },
+    props: { tag },
+  }));
+}
+
+const { tag } = Astro.props;
+const allTags = await getAllTags();
+
+// タグに該当する作品を取得
+const allWorks = await getCollection("works");
+const filteredWorks = allWorks
+  .filter((work) => work.data.tags?.includes(tag))
+  .sort((a, b) => b.data.year - a.data.year || a.data.order - b.data.order);
 
 // 年でグループ化
-const worksByYear = sortedWorks.reduce(
+const worksByYear = filteredWorks.reduce(
   (acc, work) => {
     const year = work.data.year;
     if (!acc[year]) acc[year] = [];
     acc[year].push(work);
     return acc;
   },
-  {} as Record<number, typeof sortedWorks>
+  {} as Record<number, typeof filteredWorks>
 );
 
 const years = Object.keys(worksByYear)
@@ -41,20 +51,20 @@ const years = Object.keys(worksByYear)
 ---
 
 <BaseLayout
-  title="仕事一覧"
-  description="テキストパントリーが手掛けた作品一覧です。ゲームシナリオ、ノベライズ、アニメ脚本など、様々な作品をご紹介します。"
+  title={`${tag}の作品一覧`}
+  description={`「${tag}」タグが付いた作品一覧です。`}
 >
   <section class="section-spacing">
     <div class="container-content">
       <SectionHeading
-        title="仕事一覧"
+        title={`${tag}の作品`}
         titleEn="Works"
-        subtitle="これまで手掛けた作品をご紹介します"
+        subtitle={`「${tag}」タグが付いた作品 ${filteredWorks.length}件`}
         align="center"
       />
 
       <!-- タグフィルター -->
-      <TagFilter tags={allTags} />
+      <TagFilter tags={allTags} currentTag={tag} />
 
       <!-- 作品グリッド（年別） -->
       <div class="relative mt-16 lg:flex lg:gap-12">

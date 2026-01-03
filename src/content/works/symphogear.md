@@ -9,7 +9,7 @@ description: 「戦姫絶唱シンフォギア」関連作品。
 featured: false
 order: 10
 tags:
-  - 関連作品
+  - 特典
 ---
 
 2015年12月23日発売の作品。

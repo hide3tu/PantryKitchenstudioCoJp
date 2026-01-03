@@ -7,9 +7,10 @@ interface Props {
   thumbnail?: string;
   description: string;
   client?: string;
+  tags?: string[];
 }
 
-const { slug, title, category, year, thumbnail, description, client } = Astro.props;
+const { slug, title, category, year, thumbnail, description, client, tags } = Astro.props;
 
 const categoryLabels: Record<string, string> = {
   novel: "ノベライズ",
@@ -76,6 +77,30 @@ const categoryLabels: Record<string, string> = {
       </p>
     </div>
   </a>
+
+  <!-- タグ表示（リンク外に配置してクリック干渉を防ぐ） -->
+  {
+    tags && tags.length > 0 && tags.some((t) => t.trim()) && (
+      <div class="flex flex-wrap gap-1.5 mt-3">
+        {tags
+          .filter((t) => t.trim())
+          .slice(0, 3)
+          .map((tag) => (
+            <a
+              href={`/works/tag/${tag}/`}
+              class="px-2 py-0.5 text-xs border border-[var(--color-border)] hover:bg-[var(--color-foreground)] hover:text-[var(--color-background)] hover:border-[var(--color-foreground)] transition-all duration-300"
+            >
+              {tag}
+            </a>
+          ))}
+        {tags.filter((t) => t.trim()).length > 3 && (
+          <span class="px-2 py-0.5 text-xs text-[var(--color-muted-foreground)]">
+            +{tags.filter((t) => t.trim()).length - 3}
+          </span>
+        )}
+      </div>
+    )
+  }
 </article>
 
 <style>

@@ -12,7 +12,6 @@ staff:
 featured: false
 order: 15
 tags:
-  - ライトノベル
   - 小説
 ---
 

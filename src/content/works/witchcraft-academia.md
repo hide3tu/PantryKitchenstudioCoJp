@@ -12,8 +12,7 @@ staff:
 featured: false
 order: 6
 tags:
-  - ライトノベル
-  - 小説
+  - コミック
 ---
 
 2019年8月5日発売のライトノベル。

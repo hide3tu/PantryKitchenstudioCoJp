@@ -14,9 +14,6 @@ order: 16
 externalUrl: https://ga.sbcr.jp/product/nyaruko/
 tags:
   - ライトノベル
-  - 小説
-  - アニメ化
-  - 受賞作
 ---
 
 2009年4月15日発売のライトノベル。

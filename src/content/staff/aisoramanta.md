@@ -14,6 +14,7 @@ skills:
   - シリーズ構成
   - ライトノベル
   - 小説
+  - コミック
 social:
   twitter: https://twitter.com/aisoramanta
 ---
