@@ -3,6 +3,10 @@ import { getCollection, render } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Button from "@components/ui/Button.astro";
 
+// スタッフslugから名前へのマッピングを作成
+const allStaff = await getCollection("staff");
+const staffSlugToName = new Map(allStaff.map((s) => [s.id, s.data.name]));
+
 export async function getStaticPaths() {
   const works = await getCollection("works");
   return works.map((work) => ({
@@ -140,11 +144,21 @@ const nextWork = sortedWorks[currentIndex + 1];
           <div class="container-narrow">
             <h2 class="text-sm font-medium mb-4">担当スタッフ</h2>
             <div class="flex flex-wrap gap-4">
-              {work.data.staff.map((staffName) => (
-                <span class="text-[var(--color-muted-foreground)]">
-                  {staffName}
-                </span>
-              ))}
+              {work.data.staff.map((staffSlug) => {
+                const name = staffSlugToName.get(staffSlug);
+                return name ? (
+                  <a
+                    href={`/staff/#${staffSlug}`}
+                    class="text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors"
+                  >
+                    {name}
+                  </a>
+                ) : (
+                  <span class="text-[var(--color-muted-foreground)]">
+                    {staffSlug}
+                  </span>
+                );
+              })}
             </div>
           </div>
         </section>
