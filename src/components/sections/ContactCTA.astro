@@ -1,5 +1,4 @@
 ---
-import Button from "@components/ui/Button.astro";
 ---
 
 <section class="section-spacing">
@@ -25,14 +24,12 @@ import Button from "@components/ui/Button.astro";
           まずはお問い合わせフォームよりご連絡ください。
         </p>
 
-        <Button
+        <a
           href="/contact/"
-          variant="secondary"
-          size="large"
-          class="border-[var(--color-background)] text-[var(--color-background)] hover:bg-[var(--color-background)] hover:text-[var(--color-foreground)]"
+          class="btn-inverted inline-flex items-center justify-center font-medium tracking-wide px-8 py-4 text-base"
         >
           お問い合わせフォームへ
-        </Button>
+        </a>
       </div>
 
       <!-- 装飾線 -->
