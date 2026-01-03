@@ -29,8 +29,9 @@ const tagNames = new Set(allTags.map((t) => t.tag));
         {
           sortedStaff.map((staff, index) => (
             <article
+              id={staff.id}
               class:list={[
-                "grid lg:grid-cols-2 gap-12 items-center",
+                "grid lg:grid-cols-2 gap-12 items-center scroll-mt-24",
                 index % 2 === 1 && "lg:direction-rtl",
               ]}
             >

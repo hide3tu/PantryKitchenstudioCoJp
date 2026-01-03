@@ -12,8 +12,8 @@ const { slug, name, nameEn, role, bio, image } = Astro.props;
 const initial = name.charAt(0);
 ---
 
-<article class="group">
-  <div class="flex gap-6 items-start">
+<a href={`/staff/#${slug}`} class="group block">
+  <article class="flex gap-6 items-start">
     <!-- 画像 -->
     <div class="staff-image-container flex-shrink-0 w-24 h-24 md:w-32 md:h-32 overflow-hidden bg-[var(--color-muted)] relative">
       <img
@@ -51,8 +51,8 @@ const initial = name.charAt(0);
         {bio}
       </p>
     </div>
-  </div>
-</article>
+  </article>
+</a>
 
 <style>
   .line-clamp-3 {
