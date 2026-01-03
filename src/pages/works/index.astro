@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import SectionHeading from "@components/ui/SectionHeading.astro";
 import WorkCard from "@components/ui/WorkCard.astro";
+import YearNav from "@components/ui/YearNav.astro";
 
 const allWorks = await getCollection("works");
 const sortedWorks = allWorks.sort((a, b) =>
@@ -50,33 +51,39 @@ const years = Object.keys(worksByYear)
       />
 
       <!-- 作品グリッド（年別） -->
-      <div class="mt-16 space-y-20">
-        {
-          years.map((year) => (
-            <div>
-              <div class="flex items-center gap-4 mb-8">
-                <span class="font-display text-4xl text-[var(--color-border)]">
-                  {year}
-                </span>
-                <div class="flex-1 h-px bg-[var(--color-border)]" />
-              </div>
+      <div class="relative mt-16 lg:flex lg:gap-12">
+        <!-- メインコンテンツ -->
+        <div class="flex-1 space-y-20">
+          {
+            years.map((year) => (
+              <div id={`year-${year}`} data-year={year}>
+                <div class="flex items-center gap-4 mb-8">
+                  <span class="font-display text-4xl text-[var(--color-border)]">
+                    {year}
+                  </span>
+                  <div class="flex-1 h-px bg-[var(--color-border)]" />
+                </div>
 
-              <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-                {worksByYear[year].map((work) => (
-                  <WorkCard
-                    slug={work.id}
-                    title={work.data.title}
-                    category={work.data.category}
-                    year={work.data.year}
-                    thumbnail={work.data.thumbnail}
-                    description={work.data.description}
-                    client={work.data.client}
-                  />
-                ))}
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+                  {worksByYear[year].map((work) => (
+                    <WorkCard
+                      slug={work.id}
+                      title={work.data.title}
+                      category={work.data.category}
+                      year={work.data.year}
+                      thumbnail={work.data.thumbnail}
+                      description={work.data.description}
+                      client={work.data.client}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          ))
-        }
+            ))
+          }
+        </div>
+
+        <!-- 年ナビゲーション -->
+        <YearNav years={years} />
       </div>
     </div>
   </section>

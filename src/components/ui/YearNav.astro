@@ -1,0 +1,120 @@
+---
+interface Props {
+  years: number[];
+}
+
+const { years } = Astro.props;
+---
+
+<nav
+  class="hidden lg:block sticky top-28 self-start"
+  aria-label="年別ナビゲーション"
+>
+  <ul class="flex flex-col gap-1">
+    {
+      years.map((year) => (
+        <li>
+          <a
+            href={`#year-${year}`}
+            class="year-nav-link block py-1.5 px-3 font-display text-sm
+                   border-l-2 border-transparent
+                   hover:opacity-100 transition-all duration-300"
+            data-year={year}
+          >
+            {year}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .year-nav-link {
+    color: var(--color-foreground);
+    opacity: 0.3;
+  }
+
+  .year-nav-link.is-active {
+    opacity: 1;
+    border-left-color: var(--color-foreground);
+  }
+</style>
+
+<script>
+  const sections = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-year]")
+  );
+  const links = document.querySelectorAll<HTMLAnchorElement>(".year-nav-link");
+  const OFFSET = 120;
+
+  let currentYear: string | null = null;
+
+  function updateActiveYear() {
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const docHeight = document.documentElement.scrollHeight;
+
+    // ページ最下部の場合は最後の年をアクティブに
+    if (scrollY + windowHeight >= docHeight - 50) {
+      const lastSection = sections[sections.length - 1];
+      if (lastSection) {
+        setActive(lastSection.dataset.year);
+      }
+      return;
+    }
+
+    // 通常のスクロール位置検出
+    for (const section of sections) {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= OFFSET && rect.bottom > OFFSET) {
+        setActive(section.dataset.year);
+        return;
+      }
+    }
+  }
+
+  function setActive(year: string | undefined) {
+    if (!year || year === currentYear) return;
+    currentYear = year;
+    links.forEach((link) => {
+      link.classList.toggle("is-active", link.dataset.year === year);
+    });
+  }
+
+  // スクロールイベント（パフォーマンス最適化）
+  let ticking = false;
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateActiveYear();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
+
+  // 初期表示時
+  updateActiveYear();
+
+  // クリックでスムーズスクロール
+  links.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const year = link.dataset.year;
+      const target = document.getElementById(`year-${year}`);
+      if (target) {
+        const targetTop =
+          target.getBoundingClientRect().top + window.scrollY - OFFSET + 20;
+        window.scrollTo({
+          top: targetTop,
+          behavior: "smooth",
+        });
+      }
+    });
+  });
+</script>
