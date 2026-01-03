@@ -34,13 +34,12 @@ import SectionHeading from "@components/ui/SectionHeading.astro";
 
       <!-- ビジュアル -->
       <div class="relative">
-        <div class="aspect-[4/3] bg-[var(--color-background)] border border-[var(--color-border)] flex items-center justify-center">
-          <div class="text-center p-12">
-            <span class="font-display text-8xl text-[var(--color-border)]">P</span>
-            <p class="mt-4 font-display text-sm tracking-[0.3em] text-[var(--color-muted-foreground)]">
-              Text Pantry
-            </p>
-          </div>
+        <div class="aspect-[4/3] bg-[var(--color-background)] border border-[var(--color-border)] flex items-center justify-center p-12">
+          <img
+            src="/images/logo.webp"
+            alt="Text Pantry ロゴ"
+            class="max-w-full max-h-full object-contain"
+          />
         </div>
         <!-- 装飾 -->
         <div class="absolute -bottom-4 -right-4 w-full h-full border border-[var(--color-border)] -z-10" />

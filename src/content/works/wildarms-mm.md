@@ -4,7 +4,6 @@ titleEn: Wild Arms Million Memories
 category: game
 year: 2018
 publishDate: 2018-09-26
-thumbnail: /images/works/wildarms-mm.webp
 description: 名作RPG「ワイルドアームズ」シリーズのスマートフォン向け作品。ゲームシナリオを担当。
 staff:
   - aisoramanta

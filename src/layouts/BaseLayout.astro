@@ -12,7 +12,7 @@ interface Props {
 const {
   title = "テキストパントリー",
   description = "クリエイティブ執筆・シナリオ制作。ゲームシナリオ、ノベライズ、アニメ脚本など、物語を紡ぐプロフェッショナル集団。",
-  ogImage = "/og-image.jpg",
+  ogImage = "/images/ogp.png",
 } = Astro.props;
 
 const siteTitle = title === "テキストパントリー" ? title : `${title} | テキストパントリー`;
@@ -28,7 +28,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.webp" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <!-- OGP -->
     <meta property="og:title" content={siteTitle} />

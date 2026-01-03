@@ -35,10 +35,14 @@ const sortedStaff = allStaff.sort((a, b) => a.data.order - b.data.order);
                   <img
                     src={staff.data.image}
                     alt={staff.data.name}
-                    class="w-full h-full object-cover"
+                    class="staff-img w-full h-full object-cover"
                     loading="lazy"
                     decoding="async"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                   />
+                  <div class="staff-placeholder hidden w-full h-full items-center justify-center absolute inset-0 bg-[var(--color-muted)]">
+                    <span class="font-serif text-6xl md:text-8xl text-[var(--color-muted-foreground)]">{staff.data.name.charAt(0)}</span>
+                  </div>
                 </div>
               </div>
 

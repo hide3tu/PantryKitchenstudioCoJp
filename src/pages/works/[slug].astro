@@ -45,18 +45,20 @@ const nextWork = sortedWorks[currentIndex + 1];
           <div class="order-2 lg:order-1">
             {
               work.data.thumbnail ? (
-                <div class="aspect-[4/3] overflow-hidden bg-[var(--color-background)]">
+                <div class="overflow-hidden bg-[var(--color-background)]">
                   <img
                     src={work.data.thumbnail}
                     alt={work.data.title}
-                    class="w-full h-full object-cover"
+                    class="w-full h-auto"
                   />
                 </div>
               ) : (
-                <div class="aspect-[4/3] bg-[var(--color-background)] flex items-center justify-center">
-                  <span class="font-display text-8xl text-[var(--color-border)]">
-                    P
-                  </span>
+                <div class="aspect-[4/3] bg-[var(--color-background)] flex items-center justify-center p-12">
+                  <img
+                    src="/images/logo.webp"
+                    alt=""
+                    class="max-w-full max-h-full object-contain opacity-30"
+                  />
                 </div>
               )
             }
